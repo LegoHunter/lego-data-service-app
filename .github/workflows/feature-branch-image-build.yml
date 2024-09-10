@@ -1,0 +1,23 @@
+name: 'feature branch :: mvn deploy snapshot'
+run-name: 'feature branch :: mvn deploy snapshot'
+on:
+  workflow_run:
+    workflows: ["Run Tests"]
+    branches: ['feature/**']
+    types:
+      - completed
+jobs:
+  Feature-Branch-Image-Build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Buildah Action
+        uses: redhat-actions/buildah-build@v2
+        with:
+          image: my-new-image
+          tags: v1 ${{ github.sha }}
+          containerfiles: |
+            ./Containerfile
+          build-args: |
+            some_arg=some_value
