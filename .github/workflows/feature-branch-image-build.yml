@@ -1,5 +1,5 @@
-name: 'feature branch :: mvn deploy snapshot'
-run-name: 'feature branch :: mvn deploy snapshot'
+name: 'feature branch :: image build'
+run-name: 'feature branch :: image build'
 on:
   workflow_run:
     workflows: ["feature branch :: mvn deploy snapshot"]
