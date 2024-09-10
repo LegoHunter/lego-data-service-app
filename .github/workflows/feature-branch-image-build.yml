@@ -1,6 +1,9 @@
 name: 'feature branch :: image build'
 run-name: 'feature branch :: image build'
 on:
+  push:
+    branches:
+      - 'feature/**'
   workflow_run:
     workflows:
       - 'feature branch :: mvn deploy snapshot'
