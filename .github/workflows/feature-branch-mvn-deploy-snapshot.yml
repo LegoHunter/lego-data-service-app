@@ -22,3 +22,17 @@ jobs:
       run: mvn --batch-mode --update-snapshots deploy
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  Feature-Branch-Image-Build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Buildah Action
+        uses: redhat-actions/buildah-build@v2
+        with:
+          image: my-new-image
+          tags: v1 ${{ github.sha }}
+          containerfiles: |
+            ./kubernetes/Containerfile
+          build-args: |
+            some_arg=some_value
