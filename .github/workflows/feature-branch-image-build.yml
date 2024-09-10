@@ -4,10 +4,8 @@ on:
   workflow_run:
     workflows:
       - 'feature branch :: mvn deploy snapshot'
-    branches:
-      - 'feature/**'
     types:
-      - requested
+      - completed
 jobs:
   Feature-Branch-Image-Build:
     runs-on: ubuntu-latest
