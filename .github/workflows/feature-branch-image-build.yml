@@ -4,7 +4,7 @@ on:
   workflow_run:
     workflows: ["feature branch :: mvn deploy snapshot"]
     branches:
-      - 'feature/**
+      - 'feature/**'
     types:
       - completed
 jobs:
