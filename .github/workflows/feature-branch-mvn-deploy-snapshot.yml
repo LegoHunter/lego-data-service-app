@@ -1,5 +1,4 @@
-name: 'feature branch :: mvn deploy snapshot'
-run-name: 'feature branch :: mvn deploy snapshot'
+name: 'feature branch mvn deploy snapshot'
 on:
   push:
     branches:
