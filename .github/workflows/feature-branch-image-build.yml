@@ -1,10 +1,9 @@
 name: 'feature branch :: image build'
 run-name: 'feature branch :: image build'
 on:
-  push:
+  workflow_run:
     branches:
       - 'feature/**'
-  workflow_run:
     workflows:
       - 'feature branch :: mvn deploy snapshot'
     types:
@@ -21,6 +20,6 @@ jobs:
           image: my-new-image
           tags: v1 ${{ github.sha }}
           containerfiles: |
-            ./Containerfile
+            ./kubernetes/Containerfile
           build-args: |
             some_arg=some_value
