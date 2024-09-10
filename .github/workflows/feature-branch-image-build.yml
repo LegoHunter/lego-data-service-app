@@ -2,7 +2,7 @@ name: 'feature branch :: mvn deploy snapshot'
 run-name: 'feature branch :: mvn deploy snapshot'
 on:
   workflow_run:
-    workflows: ["Run Tests"]
+    workflows: ["feature branch :: mvn deploy snapshot"]
     branches: ['feature/**']
     types:
       - completed
