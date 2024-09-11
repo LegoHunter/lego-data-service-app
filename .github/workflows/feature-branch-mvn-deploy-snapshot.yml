@@ -31,3 +31,11 @@ jobs:
           ./kubernetes/Containerfile
         build-args: |
           some_arg=some_value
+    - name: Log in to Quay.io
+      uses: redhat-actions/podman-login@v1
+      with:
+        username: ${{ secrets.QUAY_USERNAME }}
+        password: ${{ secrets.QUAY_TOKEN }}
+        registry: quay.io/tvattima/lego-data-service
+
+  # Now you can push images, and pull private ones, from quay.io as 'quayuser'.
