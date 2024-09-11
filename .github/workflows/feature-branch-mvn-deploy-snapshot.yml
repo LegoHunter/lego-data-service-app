@@ -23,15 +23,13 @@ jobs:
         run: mvn --batch-mode --update-snapshots deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Buildah Action
+      - name: buildah-build
         uses: redhat-actions/buildah-build@v2
         with:
-          image: my-new-image
-          tags: v1 ${{ github.sha }}
+          image: lego-data-service
+          tags: ${{ github.sha }} snapshot latest
           containerfiles: |
             ./kubernetes/Containerfile
-          build-args: |
-            some_arg=some_value
       - name: Log in to Quay.io
         uses: redhat-actions/podman-login@v1
         with:
