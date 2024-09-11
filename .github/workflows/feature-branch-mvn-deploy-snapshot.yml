@@ -45,6 +45,10 @@ jobs:
           image: ${{ steps.buildah-build.outputs.image }}
           tags: ${{ steps.buildah-build.outputs.tags }}
           registry: quay.io/tvattima
+  deploy-to-legolandserver1:
+     runs-on: legolandserver1
 
-      - name: Print image url
-        run: echo "Image pushed to ${{ steps.podman-push.outputs.registry-paths }}"
+     steps:
+       - name: Group of log lines
+         run: |
+           echo "Hello Legoland Server 1"
