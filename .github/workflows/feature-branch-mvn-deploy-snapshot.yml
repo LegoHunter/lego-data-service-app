@@ -12,40 +12,39 @@ jobs:
       contents: read
       packages: write
     steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          architecture: x64
+          cache: maven
+      - name: mvn clean install
+        run: mvn --batch-mode --update-snapshots deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Buildah Action
+        uses: redhat-actions/buildah-build@v2
+        with:
+          image: my-new-image
+          tags: v1 ${{ github.sha }}
+          containerfiles: |
+            ./kubernetes/Containerfile
+          build-args: |
+            some_arg=some_value
+      - name: Log in to Quay.io
+        uses: redhat-actions/podman-login@v1
+        with:
+          username: ${{ vars.QUAY_USERNAME }}
+          password: ${{ secrets.QUAY_TOKEN }}
+          registry: quay.io/tvattima/lego-data-service
 
-    - uses: actions/checkout@v4
-    - uses: actions/setup-java@v4
-      with:
-        java-version: '21'
-        distribution: 'temurin'
-        architecture: x64
-        cache: maven
-    - name: mvn-deploy
-      run: mvn --batch-mode --update-snapshots deploy
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: podman-push
+        uses: redhat-actions/push-to-registry@v2
+        with:
+          image: ${{ steps.buildah-build.outputs.image }}
+          tags: ${{ steps.buildah-build.outputs.tags }}
+          registry: quay.io/${{ vars.QUAY_USERNAME }}
 
-      uses: redhat-actions/buildah-build@v2
-    - name: buildah-build
-      with:
-        image: lego-data-service
-        tags: latest snapshot ${{ github.sha }}
-        containerfiles: |
-          ./kubernetes/Containerfile
-
-      uses: redhat-actions/podman-login@v1
-    - name: quay-login
-      with:
-        username: ${{ vars.QUAY_USERNAME }}
-        password: ${{ secrets.QUAY_TOKEN }}
-        registry: quay.io/tvattima/lego-data-service
-
-      uses: redhat-actions/push-to-registry@v2
-    - name: podman-push
-      with:
-        image: ${{ steps.buildah-build.outputs.image }}
-        tags: ${{ steps.buildah-build.outputs.tags }}
-        registry: quay.io/${{ vars.QUAY_USERNAME }}
-
-    - name: Print image url
-      run: echo "Image pushed to ${{ steps.podman-push.outputs.registry-paths }}"
+      - name: Print image url
+        run: echo "Image pushed to ${{ steps.podman-push.outputs.registry-paths }}"
