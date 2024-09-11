@@ -1,0 +1,15 @@
+name: 'self-hosted runner test'
+on:
+  push:
+    branches:
+      - 'feature/**'
+      - 'develop'
+
+jobs:
+  deploy-to-legolandserver1:
+     runs-on: [self-hosted, Linux, ARM64]
+
+     steps:
+       - name: Group of log lines
+         run: |
+           echo "Hello Legoland Server 1"
