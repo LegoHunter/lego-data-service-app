@@ -24,6 +24,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: buildah-build
+        id: buildah-build
         uses: redhat-actions/buildah-build@v2
         with:
           image: lego-data-service
@@ -38,6 +39,7 @@ jobs:
           registry: quay.io/tvattima/lego-data-service
 
       - name: podman-push
+        id: podman-push
         uses: redhat-actions/push-to-registry@v2
         with:
           image: ${{ steps.buildah-build.outputs.image }}
