@@ -17,13 +17,14 @@
         <java.version>21</java.version>
         <bricklink-data.version>1.2.1-SNAPSHOT</bricklink-data.version>
         <mybatis-spring-boot-starter.version>3.0.3</mybatis-spring-boot-starter.version>
+        <github.organization>LegoHunter</github.organization>
     </properties>
 
     <distributionManagement>
         <repository>
             <id>github</id>
             <name>GitHub Packages</name>
-            <url>https://maven.pkg.github.com/tvattima/${project.artifactId}</url>
+            <url>https://maven.pkg.github.com/${github.organization}/${project.artifactId}</url>
         </repository>
     </distributionManagement>
 
@@ -34,7 +35,7 @@
         </repository>
         <repository>
             <id>github</id>
-            <url>https://maven.pkg.github.com/tvattima/*</url>
+            <url>https://maven.pkg.github.com/${github.organization}/*</url>
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
