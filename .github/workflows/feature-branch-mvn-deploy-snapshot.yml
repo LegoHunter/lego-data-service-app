@@ -37,5 +37,3 @@ jobs:
         username: ${{ env.QUAY_USERNAME }}
         password: ${{ secrets.QUAY_TOKEN }}
         registry: quay.io/tvattima/lego-data-service
-
-  # Now you can push images, and pull private ones, from quay.io as 'quayuser'.
