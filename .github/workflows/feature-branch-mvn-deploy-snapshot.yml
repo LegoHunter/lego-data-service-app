@@ -44,7 +44,7 @@ jobs:
         with:
           image: ${{ steps.buildah-build.outputs.image }}
           tags: ${{ steps.buildah-build.outputs.tags }}
-          registry: quay.io/${{ vars.QUAY_USERNAME }}
+          registry: quay.io/tvattima
 
       - name: Print image url
         run: echo "Image pushed to ${{ steps.podman-push.outputs.registry-paths }}"
