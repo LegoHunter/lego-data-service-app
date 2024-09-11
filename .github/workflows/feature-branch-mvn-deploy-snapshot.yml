@@ -4,6 +4,11 @@ on:
     branches:
       - 'feature/**'
       - 'develop'
+env:
+  REGISTRY_USER: ${{ env.QUAY_USERNAME }}
+  IMAGE_REGISTRY: quay.io
+  REGISTRY_PASSWORD: ${{ secrets.QUAY_TOKEN }}
+
 jobs:
   Feature-Branch-Maven-Deploy-Snapshot:
     runs-on: ubuntu-latest
@@ -34,6 +39,6 @@ jobs:
     - name: Log in to Quay.io
       uses: redhat-actions/podman-login@v1
       with:
-        username: ${{ env.QUAY_USERNAME }}
-        password: ${{ secrets.QUAY_TOKEN }}
+        username: ${{ env.REGISTRY_USER }}
+        password: ${{ env.REGISTRY_PASSWORD }}
         registry: quay.io/tvattima/lego-data-service
