@@ -1,4 +1,4 @@
-name: 'self-hosted runner test'
+name: 'self-hosted runner test x'
 on:
   push:
     branches:
