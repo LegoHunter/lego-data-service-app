@@ -6,7 +6,7 @@ on:
       - 'develop'
 
 env:
-  REGISTRY_USER: ${{ QUAY_USERNAME }}
+  REGISTRY_USER: ${{ var.QUAY_USERNAME }}
   IMAGE_REGISTRY: quay.io
   REGISTRY_PASSWORD: ${{ secrets.QUAY_TOKEN }}
 
