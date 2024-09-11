@@ -46,7 +46,7 @@ jobs:
           tags: ${{ steps.buildah-build.outputs.tags }}
           registry: quay.io/tvattima
   deploy-to-legolandserver1:
-     runs-on: legolandserver1
+     runs-on: self-hosted
 
      steps:
        - name: Group of log lines
