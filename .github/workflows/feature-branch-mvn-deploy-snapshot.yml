@@ -33,7 +33,7 @@ jobs:
           some_arg=some_value
     - name: Log in to Quay.io
       env:
-        QUAY_USERNAME: ${{ secrets.QUAY_USERNAME }}
+        QUAY_USERNAME: ${{ env.QUAY_USERNAME }}
         QUAY_TOKEN: ${{ secrets.QUAY_TOEN }}
       uses: redhat-actions/podman-login@v1
       with:
