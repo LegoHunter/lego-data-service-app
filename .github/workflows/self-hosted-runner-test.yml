@@ -9,17 +9,17 @@ jobs:
   deploy-to-legolandserver1:
      runs-on: [self-hosted, Linux, ARM64]
 
-     steps:
-       - uses: actions/checkout@v4
-         with:
-           sparse-checkout: |
-             kubernetes
-         env:
-           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  steps:
+    - uses: actions/checkout@v4
+      with:
+        sparse-checkout: |
+          kubernetes
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-       - uses: actions-hub/kubectl@master
-       - name: kubectl-update-image
-         env:
-           KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
-         with:
-           args: get pods
+    - uses: actions-hub/kubectl@master
+    - name: kubectl-update-image
+      env:
+        KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+      with:
+        args: get pods
