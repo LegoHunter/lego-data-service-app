@@ -46,10 +46,12 @@ jobs:
           image: ${{ steps.buildah-build.outputs.image }}
           tags: ${{ steps.buildah-build.outputs.tags }}
           registry: quay.io/tvattima
-  deploy-to-legolandserver1:
-     runs-on: [self-hosted, Linux, ARM64]
 
-     steps:
-       - name: Redeploy on Kubernetes cluster
-         run: |
-           kubectl set image deployment/lego-data-service-deployment lego-data-service-deployment=quay.io/tvattima/lego-data-service:snapshot --namespace=sandbox
+  deploy-to-legolandserver1:
+    needs: Feature-Branch-Maven-Deploy-Snapshot
+    runs-on: [ self-hosted, Linux, ARM64 ]
+
+    steps:
+      - name: Redeploy on Kubernetes cluster
+        run: |
+          kubectl set image deployment/lego-data-service-deployment lego-data-service-deployment=quay.io/tvattima/lego-data-service:snapshot --namespace=sandbox
