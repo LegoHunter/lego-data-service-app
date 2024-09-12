@@ -29,6 +29,7 @@ jobs:
         with:
           image: lego-data-service
           tags: ${{ github.sha }} snapshot latest
+          platforms: linux/arm64
           containerfiles: |
             ./kubernetes/Containerfile
       - name: Log in to Quay.io
