@@ -10,17 +10,17 @@ jobs:
     runs-on: [self-hosted, Linux, ARM64]
 
     steps:
+      - name: checkout
       - uses: actions/checkout@v4
         with:
           sparse-checkout: |
             kubernetes
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#
-#      - uses: actions-hub/kubectl@master
-#      - name: kubectl-update-image
-#        env:
-#          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
-#        with:
-#          args: get pods
-#
+
+      - name: kubectl-update-image
+      - uses: actions-hub/kubectl@master
+        env:
+          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+        with:
+          args: get pods
