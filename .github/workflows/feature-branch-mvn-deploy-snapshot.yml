@@ -24,12 +24,12 @@ jobs:
           distribution: 'temurin'
           architecture: x64
           cache: maven
-        id: xxxxx
-      - name: mvn clean deploy
-        run: mvn --batch-mode --update-snapshots deploy
+      - name: mvn deploy
+        run: mvn --update-snapshots deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: buildah-build
+
+      - name: Buildah Build
         id: buildah-build
         uses: redhat-actions/buildah-build@v2
         with:
@@ -38,6 +38,7 @@ jobs:
           platforms: linux/arm64
           containerfiles: |
             ./kubernetes/Containerfile
+
       - name: Log in to Quay.io
         uses: redhat-actions/podman-login@v1
         with:
@@ -45,8 +46,7 @@ jobs:
           password: ${{ secrets.QUAY_TOKEN }}
           registry: quay.io/tvattima/lego-data-service
 
-      - name: podman-push
-        id: podman-push
+      - name: Podman Push
         uses: redhat-actions/push-to-registry@v2
         with:
           image: ${{ steps.buildah-build.outputs.image }}
