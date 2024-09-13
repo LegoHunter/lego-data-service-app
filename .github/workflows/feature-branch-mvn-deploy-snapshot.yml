@@ -1,4 +1,4 @@
-name: 'feature branch mvn deploy snapshot'
+name: 'Build Test Deploy'
 on:
   push:
     branches:
@@ -17,39 +17,7 @@ jobs:
       contents: read
       packages: write
     steps:
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
-      - name: Dump job context
-        env:
-          JOB_CONTEXT: ${{ toJson(job) }}
-        run: echo "$JOB_CONTEXT"
-      - name: Dump steps context
-        env:
-          STEPS_CONTEXT: ${{ toJson(steps) }}
-        run: echo "$STEPS_CONTEXT"
-      - name: Dump runner context
-        env:
-          RUNNER_CONTEXT: ${{ toJson(runner) }}
-        run: echo "$RUNNER_CONTEXT"
-      - name: Dump strategy context
-        env:
-          STRATEGY_CONTEXT: ${{ toJson(strategy) }}
-        run: echo "$STRATEGY_CONTEXT"
-      - name: Dump matrix context
-        env:
-          MATRIX_CONTEXT: ${{ toJson(matrix) }}
-        run: echo "$MATRIX_CONTEXT"
-
-      - name: Show default environment variables
-        run: |
-          echo "The job_id is: $GITHUB_JOB"   # reference the default environment variables
-          echo "The id of this action is: $GITHUB_ACTION"   # reference the default environment variables
-          echo "The run id is: $GITHUB_RUN_ID"
-          echo "The GitHub Actor's username is: $GITHUB_ACTOR"
-          echo "GitHub SHA: $GITHUB_SHA"        
-
+      - id: checkout
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
@@ -57,12 +25,11 @@ jobs:
           distribution: 'temurin'
           architecture: x64
           cache: maven
-      - name: mvn clean install
+      - id: mvn-clean-deploy
         run: mvn --batch-mode --update-snapshots deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: buildah-build
-        id: buildah-build
+      - id: buildah-build
         uses: redhat-actions/buildah-build@v2
         with:
           image: lego-data-service
@@ -70,15 +37,14 @@ jobs:
           platforms: linux/arm64
           containerfiles: |
             ./kubernetes/Containerfile
-      - name: Log in to Quay.io
+      - id: quay-login
         uses: redhat-actions/podman-login@v1
         with:
           username: ${{ vars.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_TOKEN }}
           registry: quay.io/tvattima/lego-data-service
 
-      - name: podman-push
-        id: podman-push
+      - id: podman-push
         uses: redhat-actions/push-to-registry@v2
         with:
           image: ${{ steps.buildah-build.outputs.image }}
@@ -90,6 +56,6 @@ jobs:
     runs-on: [ self-hosted, Linux, ARM64 ]
 
     steps:
-      - name: Redeploy on Kubernetes cluster
+      - id: kubernetes-deployment
         run: |
           kubectl set image deployment/lego-data-service-deployment lego-data-service-deployment=quay.io/tvattima/lego-data-service:snapshot --namespace=sandbox
