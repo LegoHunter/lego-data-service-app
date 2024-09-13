@@ -1,3 +1,30 @@
+server:
+  port: ${serverPort:8080}
 spring:
+  jmx:
+    enabled: false
   application:
-    name=Lego Data Service
+    name: Lego Data service
+  kafka:
+    bootstrap-servers: 10.0.0.10:9092
+    consumer:
+      group-id: chat-room-consumer
+  datasource:
+    url: jdbc:mysql://legolandserver1:3306/lego_dev
+    username: legomgr
+    password: N1njago!
+    hikari:
+      connection-timeout: 10000
+      idle-timeout: 30000
+      connection-test-query: SELECT 1
+      initialization-fail-timeout: 10000
+      auto-commit: false
+      login-timeout: 10000
+      minimum-idle: 5
+      maximum-pool-size: 5
+      validation-timeout: 10000
+      pool-name: legolandserver1-mysql-jdbc-pool
+
+logging:
+  level:
+    root: info
