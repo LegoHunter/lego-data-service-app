@@ -3,7 +3,12 @@ on:
   push:
     branches:
       - 'feature/**'
-      - 'develop'
+  pull_request:
+    branches:
+      - develop
+      - master
+    types:
+      - closed
 
 jobs:
   Feature-Branch-Maven-Deploy-Snapshot:
