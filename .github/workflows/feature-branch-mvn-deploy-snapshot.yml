@@ -3,17 +3,12 @@ on:
   push:
     branches:
       - 'feature/**'
-  pull_request:
-    branches:
-      - develop
-      - master
-    types:
-      - closed
-
-env:
-  HEAD_REF: ${{ github.head_ref }}
-  BASE_REF: ${{ github.base_ref }}
-  REF_NAME: ${{ github.ref_name }}
+#  pull_request:
+#    branches:
+#      - develop
+#      - master
+#    types:
+#      - closed
 
 jobs:
   Feature-Branch-Maven-Deploy-Snapshot:
