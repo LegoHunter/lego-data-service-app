@@ -1,0 +1,3 @@
+spring:
+  datasource:
+    database-key-name: legolandserver1-lego-sandbox
