@@ -1,4 +1,4 @@
 # lego-data-service
-Lego Data Operations API
+Lego Data Operations API.
 
 ### Deploys to Kubernetes
