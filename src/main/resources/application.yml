@@ -22,8 +22,6 @@ spring:
       validation-timeout: 60000
       pool-name: site5-mysql-jdbc-pool
       max-lifetime: 10000
-  config:
-    import: file:/dev/config/database/database-configuration.yml
 
 #      security:
 #        protocol: SASL_SSL
