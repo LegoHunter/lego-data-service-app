@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: lego-data-service-deployment
-          image: quay.io/tvattima/lego-data-service
+          image: quay.io/tvattima/lego-data-service:sandbox
           imagePullPolicy: Always
           ports:
             - containerPort: 8080
