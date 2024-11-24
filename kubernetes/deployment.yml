@@ -26,5 +26,13 @@ spec:
           env:
             - name: ABC
               value: "123"
+          volumeMounts:
+            - name: database-volume
+              mountPath: /etc/.credentials/database
+      volumes:
+        - name: database-volume
+          projected:
+            sources:
+              - secret:
+                  name: database-configuration
       restartPolicy: Always
-      
