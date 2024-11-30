@@ -112,3 +112,4 @@ jobs:
       - name: Deploy on Kubernetes cluster
         run: |
           kubectl set image deployment/${{env.APP_NAME}}-deployment ${{env.APP_NAME}}-deployment=quay.io/tvattima/${{env.APP_NAME}}:${{env.TAG_NAME}} --namespace=${{env.NAMESPACE}}
+          kubectl rollout restart deployment/${{env.APP_NAME}}-deployment
