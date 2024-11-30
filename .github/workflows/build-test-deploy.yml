@@ -58,8 +58,8 @@ jobs:
       - name: buildah build
         uses: redhat-actions/buildah-build@v2
         with:
-          image: lego-data-service
-          tags: "${{ github.sha }} $TAG_NAME"
+          image: quay.io/tvattima/lego-data-service
+          tags: "${{ github.sha }} ${{env.TAG_NAME}}"
           platforms: linux/arm64
           containerfiles: |
             ./kubernetes/Containerfile
