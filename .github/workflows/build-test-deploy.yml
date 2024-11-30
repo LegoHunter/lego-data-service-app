@@ -37,18 +37,21 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - if: ${{ startsWith(GITHUB_REF_NAME, 'feature/') }}
-        name: set snapshot tag
+      - name: set snapshot tag
+        if: ${{ startsWith(GITHUB_REF_NAME, 'feature/') }}
+        run: |  
           echo "TAG_NAME=snapshot" >> "$GITHUB_ENV"
           echo "NAMESPACE=snapshot" >> "$GITHUB_ENV"
 
-      - if: ${{ GITHUB_REF_NAME == 'develop' }}
-        name: set develop tag
+      - name: set develop tag
+        if: ${{ GITHUB_REF_NAME == 'develop' }}
+        run: |
           echo "TAG_NAME=develop" >> "$GITHUB_ENV"
           echo "NAMESPACE=dev" >> "$GITHUB_ENV"
 
-      - if: ${{ startsWith(GITHUB_REF_NAME, 'feature/') }}
-        name: set production tag
+      - name: set production tag
+        if: ${{ startsWith(GITHUB_REF_NAME, 'feature/') }}
+        run: |
           echo "TAG_NAME=production" >> "$GITHUB_ENV"
           echo "NAMESPACE=prod" >> "$GITHUB_ENV"
 
