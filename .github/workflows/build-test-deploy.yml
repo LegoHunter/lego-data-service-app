@@ -105,7 +105,6 @@ jobs:
   deploy-to-legolandserver1:
     needs: build-test-deploy
     runs-on: [ self-hosted, Linux, ARM64 ]
-
     steps:
       - env:
           TAG_NAME: ${{needs.build-test-deploy.outputs.tag_name}}
