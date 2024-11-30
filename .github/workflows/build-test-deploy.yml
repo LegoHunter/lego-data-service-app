@@ -20,6 +20,9 @@ jobs:
     permissions:
       contents: read
       packages: write
+    outputs:
+      tag_name: ${{ steps.env-output.outputs.tag_name }}
+      namespace: ${{ steps.env-output.outputs.namespace }}
     steps:
       - name: git checkout
         uses: actions/checkout@v4
@@ -93,11 +96,20 @@ jobs:
           username: ${{ vars.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_TOKEN }}
 
+      - name: env output
+        id: env-output
+        run: |
+          echo "tag_name=${{env.TAG_NAME}}" >> "$GITHUB_OUTPUT"
+          echo "namespace=${{env.NAMESPACE}}" >> "$GITHUB_OUTPUT"
+
   deploy-to-legolandserver1:
     needs: build-test-deploy
     runs-on: [ self-hosted, Linux, ARM64 ]
 
     steps:
+      - env:
+          TAG_NAME: ${{needs.build-test-deploy.outputs.tag_name}}
+          NAMESPACE: ${{needs.build-test-deploy.outputs.namespace}}
       - name: Deploy on Kubernetes cluster
         run: |
           kubectl set image deployment/lego-data-service-deployment lego-data-service-deployment=quay.io/tvattima/lego-data-service:${{env.TAG_NAME}} --namespace=${{env.NAMESPACE}}
