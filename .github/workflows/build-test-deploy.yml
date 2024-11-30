@@ -94,12 +94,12 @@ jobs:
           registry: quay.io/tvattima
           username: ${{ vars.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_TOKEN }}
-
-      - name: env output
-        id: env-output
-        run: |
-          echo "tag_name=${{env.TAG_NAME}}" >> "$GITHUB_OUTPUT"
-          echo "namespace=${{env.NAMESPACE}}" >> "$GITHUB_OUTPUT"
+#
+#      - name: env output
+#        id: env-output
+#        run: |
+#          echo "tag_name=${{env.TAG_NAME}}" >> "$GITHUB_OUTPUT"
+#          echo "namespace=${{env.NAMESPACE}}" >> "$GITHUB_OUTPUT"
 
   deploy-to-legolandserver1:
     needs: build-test-deploy
