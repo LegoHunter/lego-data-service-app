@@ -13,6 +13,7 @@ on:
 env:
   TAG_NAME: latest
   NAMESPACE: sandbox
+  APP_NAME: lego-data-service
 
 jobs:
   build-test-deploy:
@@ -62,7 +63,7 @@ jobs:
         id: buildah-build
         uses: redhat-actions/buildah-build@v2
         with:
-          image: lego-data-service
+          image: ${{env.APP_NAME}}
           tags: "${{ github.sha }} latest ${{env.TAG_NAME}}"
           platforms: linux/arm64
           containerfiles: |
@@ -110,4 +111,4 @@ jobs:
     steps:
       - name: Deploy on Kubernetes cluster
         run: |
-          kubectl set image deployment/lego-data-service-deployment lego-data-service-deployment=quay.io/tvattima/lego-data-service:${{env.TAG_NAME}} --namespace=${{env.NAMESPACE}}
+          kubectl set image deployment/${{env.APP_NAME}}-deployment ${{env.APP_NAME}}-deployment=quay.io/tvattima/${{env.APP_NAME}}:${{env.TAG_NAME}} --namespace=${{env.NAMESPACE}}
