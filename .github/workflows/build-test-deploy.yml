@@ -69,7 +69,6 @@ jobs:
         with:
           image: ${{ steps.buildah-build.outputs.image }}
           tags: ${{ github.sha }}
-          registry: quay.io/tvattima
           username: ${{ vars.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_TOKEN }}
 
@@ -78,7 +77,6 @@ jobs:
         with:
           image: ${{ steps.buildah-build.outputs.image }}
           tags: latest
-          registry: quay.io/tvattima
           username: ${{ vars.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_TOKEN }}
 
@@ -87,7 +85,6 @@ jobs:
         with:
           image: ${{ steps.buildah-build.outputs.image }}
           tags: ${{env.TAG_NAME}}
-          registry: quay.io/tvattima
           username: ${{ vars.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_TOKEN }}
 
