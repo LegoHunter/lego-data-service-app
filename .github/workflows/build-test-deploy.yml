@@ -17,12 +17,12 @@ env:
 jobs:
   build-test-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
     outputs:
       tag_name: ${{ steps.env-output.outputs.tag_name }}
       namespace: ${{ steps.env-output.outputs.namespace }}
+    permissions:
+      contents: read
+      packages: write
     steps:
       - name: git checkout
         uses: actions/checkout@v4
@@ -85,7 +85,6 @@ jobs:
           registry: quay.io/tvattima
           username: ${{ vars.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_TOKEN }}
-
 
       - name: podman push tag
         uses: redhat-actions/push-to-registry@v2
