@@ -8,6 +8,12 @@ spring:
   kafka:
     bootstrap-servers: 10.0.0.10:9092
 
+management:
+  info:
+    git:
+      enabled: true
+      mode: full
+
   datasource:
     database-key-name: site5-dev-lego
     hikari:
