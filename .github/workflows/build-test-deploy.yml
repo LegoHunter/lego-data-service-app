@@ -59,7 +59,7 @@ jobs:
         uses: redhat-actions/buildah-build@v2
         with:
           image: lego-data-service
-          tags: ${{ github.sha }} $env.TAG_NAME
+          tags: "${{ github.sha }} $TAG_NAME"
           platforms: linux/arm64
           containerfiles: |
             ./kubernetes/Containerfile
