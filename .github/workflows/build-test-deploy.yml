@@ -59,7 +59,7 @@ jobs:
         uses: redhat-actions/buildah-build@v2
         with:
           image: lego-data-service
-          tags: ${{ github.sha }} $TAG_NAME
+          tags: ${{ github.sha }} ${env.TAG_NAME}
           platforms: linux/arm64
           containerfiles: |
             ./kubernetes/Containerfile
@@ -80,4 +80,4 @@ jobs:
     steps:
       - name: Redeploy on Kubernetes cluster
         run: |
-          kubectl set image deployment/lego-data-service-deployment lego-data-service-deployment=quay.io/tvattima/lego-data-service:$TAG_NAME --namespace=$NAMESPACE
+          kubectl set image deployment/lego-data-service-deployment lego-data-service-deployment=quay.io/tvattima/lego-data-service:${env.TAG_NAME} --namespace=${env.NAMESPACE}
