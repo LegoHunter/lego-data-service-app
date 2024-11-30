@@ -94,20 +94,20 @@ jobs:
           registry: quay.io/tvattima
           username: ${{ vars.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_TOKEN }}
-#
-#      - name: env output
-#        id: env-output
-#        run: |
-#          echo "tag_name=${{env.TAG_NAME}}" >> "$GITHUB_OUTPUT"
-#          echo "namespace=${{env.NAMESPACE}}" >> "$GITHUB_OUTPUT"
+
+      - name: env output
+        id: env-output
+        run: |
+          echo "tag_name=${{env.TAG_NAME}}" >> "$GITHUB_OUTPUT"
+          echo "namespace=${{env.NAMESPACE}}" >> "$GITHUB_OUTPUT"
 
   deploy-to-legolandserver1:
     needs: build-test-deploy
     runs-on: [ self-hosted, Linux, ARM64 ]
+    env:
+      TAG_NAME: ${{needs.build-test-deploy.outputs.tag_name}}
+      NAMESPACE: ${{needs.build-test-deploy.outputs.namespace}}
     steps:
-      - env:
-          TAG_NAME: ${{needs.build-test-deploy.outputs.tag_name}}
-          NAMESPACE: ${{needs.build-test-deploy.outputs.namespace}}
       - name: Deploy on Kubernetes cluster
         run: |
           kubectl set image deployment/lego-data-service-deployment lego-data-service-deployment=quay.io/tvattima/lego-data-service:${{env.TAG_NAME}} --namespace=${{env.NAMESPACE}}
