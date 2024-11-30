@@ -44,7 +44,7 @@ jobs:
         if: ${{ startsWith(github.ref_name, 'feature/') }}
         run: |  
           echo "TAG_NAME=snapshot" >> "$GITHUB_ENV"
-          echo "NAMESPACE=snapshot" >> "$GITHUB_ENV"
+          echo "NAMESPACE=sandbox" >> "$GITHUB_ENV"
 
       - name: set develop tag
         if: ${{ github.ref_name == 'develop' }}
