@@ -59,16 +59,34 @@ jobs:
         uses: redhat-actions/buildah-build@v2
         with:
           image: quay.io/tvattima/lego-data-service
-          tags: "${{ github.sha }} ${{env.TAG_NAME}}"
+          tags: "${{env.TAG_NAME}} ${{ github.sha }}"
           platforms: linux/arm64
           containerfiles: |
             ./kubernetes/Containerfile
 
-      - name: podman push
+      - name: podman push sha
         uses: redhat-actions/push-to-registry@v2
         with:
           image: ${{ steps.buildah-build.outputs.image }}
-          tags: ${{ steps.buildah-build.outputs.tags }}
+          tags: ${{ github.sha }}
+          registry: quay.io/tvattima
+          username: ${{ vars.QUAY_USERNAME }}
+          password: ${{ secrets.QUAY_TOKEN }}
+
+      - name: podman push latest
+        uses: redhat-actions/push-to-registry@v2
+        with:
+          image: ${{ steps.buildah-build.outputs.image }}
+          tags: latest
+          registry: quay.io/tvattima
+          username: ${{ vars.QUAY_USERNAME }}
+          password: ${{ secrets.QUAY_TOKEN }}
+
+      - name: podman push tag
+        uses: redhat-actions/push-to-registry@v2
+        with:
+          image: ${{ steps.buildah-build.outputs.image }}
+          tags: ${{env.TAG_NAME}}
           registry: quay.io/tvattima
           username: ${{ vars.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_TOKEN }}
