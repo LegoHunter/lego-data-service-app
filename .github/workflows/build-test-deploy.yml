@@ -72,21 +72,21 @@ jobs:
           username: ${{ vars.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_TOKEN }}
 
-      - name: podman push latest
-        uses: redhat-actions/push-to-registry@v2
-        with:
-          image: ${{ steps.buildah-build.outputs.image }}
-          tags: latest
-          username: ${{ vars.QUAY_USERNAME }}
-          password: ${{ secrets.QUAY_TOKEN }}
-
-      - name: podman push tag
-        uses: redhat-actions/push-to-registry@v2
-        with:
-          image: ${{ steps.buildah-build.outputs.image }}
-          tags: ${{env.TAG_NAME}}
-          username: ${{ vars.QUAY_USERNAME }}
-          password: ${{ secrets.QUAY_TOKEN }}
+#      - name: podman push latest
+#        uses: redhat-actions/push-to-registry@v2
+#        with:
+#          image: ${{ steps.buildah-build.outputs.image }}
+#          tags: latest
+#          username: ${{ vars.QUAY_USERNAME }}
+#          password: ${{ secrets.QUAY_TOKEN }}
+#
+#      - name: podman push tag
+#        uses: redhat-actions/push-to-registry@v2
+#        with:
+#          image: ${{ steps.buildah-build.outputs.image }}
+#          tags: ${{env.TAG_NAME}}
+#          username: ${{ vars.QUAY_USERNAME }}
+#          password: ${{ secrets.QUAY_TOKEN }}
 
   deploy-to-legolandserver1:
     needs: build-test-deploy
