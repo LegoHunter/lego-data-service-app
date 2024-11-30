@@ -98,6 +98,6 @@ jobs:
     runs-on: [ self-hosted, Linux, ARM64 ]
 
     steps:
-      - name: Redeploy on Kubernetes cluster
+      - name: Deploy on Kubernetes cluster
         run: |
-          kubectl set image deployment/lego-data-service-deployment lego-data-service-deployment=quay.io/tvattima/lego-data-service:$env.TAG_NAME --namespace=$env.NAMESPACE
+          kubectl set image deployment/lego-data-service-deployment lego-data-service-deployment=quay.io/tvattima/lego-data-service:${{env.TAG_NAME}} --namespace=${{env.NAMESPACE}}
