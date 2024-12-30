@@ -11,8 +11,8 @@
     <groupId>com.vattima</groupId>
     <artifactId>lego-data-service-app</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Lego :: Data Service</name>
-    <description>Demo project for Spring Boot</description>
+    <name>Lego :: Data Service App</name>
+    <description>Deployable RESTful Lego Data Service</description>
     <properties>
         <java.version>22</java.version>
         <bricklink-data.version>1.3.0-SNAPSHOT</bricklink-data.version>
