@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.vattima</groupId>
-    <artifactId>lego-data-service</artifactId>
+    <artifactId>lego-data-service-app</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Lego :: Data Service</name>
     <description>Demo project for Spring Boot</description>
